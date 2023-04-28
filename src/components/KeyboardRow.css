@@ -1,6 +1,6 @@
 .keyboardRow{
   display: flex;
-  gap:10px;
+  gap:5px;
 }
 
 .keyboard-button{
@@ -9,12 +9,12 @@
   justify-content: center;
   font-weight: bold;
   height:60px;
-  width:45px;
+  width:42px;
   background-color: grey;
   border-radius: 5px;
   cursor:pointer;
 }
 
 .keyboard-special{
-  width:80px;
+  width:75px;
 }

@@ -1,0 +1,18 @@
+.boardRow{
+  display: flex;
+  justify-content: center;
+  gap:10px;
+}
+
+.tile{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 1.6rem;
+  font-weight:bold;
+  border: 1px solid grey;
+  height:60px;
+  width:60px;
+}
+
