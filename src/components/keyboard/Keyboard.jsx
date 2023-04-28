@@ -24,7 +24,8 @@ function Keyboard(props) {
       <KeyboardRow
         row={row3}
         handleClick={props.handleClick}
-        handleSubmit={props.handleSubmit}/>
+        handleSubmit={props.handleSubmit}
+        handleDelete={props.handleDelete}/>
     </div>
   )
 }

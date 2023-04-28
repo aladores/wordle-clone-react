@@ -1,21 +1,34 @@
-.keyboardRow{
+.keyboardRow {
   display: flex;
-  gap:5px;
+  gap: 5px;
 }
 
-.keyboard-button{
+.keyboard-button {
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: bold;
-  height:60px;
-  width:42px;
+  height: 60px;
+  width: 42px;
   background-color: grey;
   border-radius: 5px;
-  color:white;
+  color: white;
   border: 0px;
+  cursor: pointer;
 }
 
-.keyboard-special{
-  width:75px;
+.keyboard-special {
+  width: 75px;
+}
+
+.green {
+  background-color: green;
+}
+
+.grey {
+  background-color: grey;
+}
+
+.yellow {
+  background-color: rgb(193, 193, 1);
 }

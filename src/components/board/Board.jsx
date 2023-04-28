@@ -13,7 +13,7 @@ function Board(props) {
     boardRow6: ["", "", "", "", ""],
   });
 
-  function fillBoard(){
+  function fillCurrentGuess(){
       let updatedRow = [
         props.currentGuess[0],
         props.currentGuess[1],
@@ -26,18 +26,18 @@ function Board(props) {
         ...prevBoard,
         [`boardRow${props.currentRow}`]: updatedRow
       }));
- 
   }
   
-  
   useEffect(() => {
-    fillBoard();
+    fillCurrentGuess();
   }, [props.currentGuess]);
-
  
   return (
     <div className="board">
-      <BoardRow boardRow={board.boardRow1}/>
+      <BoardRow boardRow={board.boardRow1}
+        word={props.word}
+        currentGuess={props.currentGuess}
+        submit={props.submit.rowSubmit1}/>
       <BoardRow boardRow={board.boardRow2}/>
       <BoardRow boardRow={board.boardRow3}/>
       <BoardRow boardRow={board.boardRow4}/>

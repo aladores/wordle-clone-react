@@ -12,9 +12,8 @@ function KeyboardRow(props) {
           buttons.push(<button key={props.row[i]} className="keyboard-button keyboard-special" value={props.row[i]} onClick={props.handleSubmit}>{props.row[i]}</button>);
         }
         else {
-          buttons.push(<button key={props.row[i]} className="keyboard-button keyboard-special" value={props.row[i]} onClick={props.handleClick}>{props.row[i]}</button>);
+          buttons.push(<button key={props.row[i]} className="keyboard-button keyboard-special" value={props.row[i]} onClick={props.handleDelete}>{props.row[i]}</button>);
         }
-        
       }
       else{
         buttons.push(<button key={props.row[i]} className="keyboard-button" value={props.row[i]} onClick={props.handleClick}>{props.row[i]}</button>);
