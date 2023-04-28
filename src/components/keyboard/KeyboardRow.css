@@ -12,7 +12,8 @@
   width:42px;
   background-color: grey;
   border-radius: 5px;
-  cursor:pointer;
+  color:white;
+  border: 0px;
 }
 
 .keyboard-special{

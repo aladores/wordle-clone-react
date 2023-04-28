@@ -1,7 +1,8 @@
+/* eslint-disable react/prop-types */
 import KeyboardRow from './KeyboardRow'
 import './Keyboard.css'
 
-function Keyboard() {
+function Keyboard(props) {
 
   const row1= ["Q","W","E","R","T","Y","U","I","O","P"];
   const row2= ["A","S","D","F","G","H","J","K","L"];
@@ -15,11 +16,15 @@ function Keyboard() {
   return (
     <div className="keyboard">
       <KeyboardRow
-        row={row1}/>
+        row={row1}
+        handleClick={props.handleClick}/>
       <KeyboardRow
-        row={row2}/>
+        row={row2}
+        handleClick={props.handleClick}/>
       <KeyboardRow
-        row={row3}/>
+        row={row3}
+        handleClick={props.handleClick}
+        handleSubmit={props.handleSubmit}/>
     </div>
   )
 }
