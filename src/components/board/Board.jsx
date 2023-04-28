@@ -27,22 +27,24 @@ function Board(props) {
         [`boardRow${props.currentRow}`]: updatedRow
       }));
   }
-  
+
   useEffect(() => {
     fillCurrentGuess();
   }, [props.currentGuess]);
- 
+
+  const boardRowElements = Object.keys(board).map((rowKey,rowIndex) => (
+    <BoardRow 
+      key={rowKey} 
+      boardRow={board[rowKey]}
+      word={props.word}
+      currentGuess={props.currentGuess}
+      submittedRow={props.submittedRow[rowIndex]}
+    />
+  ))
+
   return (
     <div className="board">
-      <BoardRow boardRow={board.boardRow1}
-        word={props.word}
-        currentGuess={props.currentGuess}
-        submit={props.submit.rowSubmit1}/>
-      <BoardRow boardRow={board.boardRow2}/>
-      <BoardRow boardRow={board.boardRow3}/>
-      <BoardRow boardRow={board.boardRow4}/>
-      <BoardRow boardRow={board.boardRow5}/>
-      <BoardRow boardRow={board.boardRow6}/>        
+      {boardRowElements}
     </div>
   )
 }

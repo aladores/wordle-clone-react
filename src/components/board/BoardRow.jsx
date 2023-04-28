@@ -5,7 +5,7 @@ function BoardRow(props) {
   const tiles = [];
   function createTiles(){
     for (let i=0;i<props.boardRow.length; i++){
-      if (props.submit === true){
+      if (props.submittedRow === true){
         if (props.word[i] === props.boardRow[i]){
           tiles.push(<div key={[i]} className="tile green">{props.boardRow[i]}</div>);
         }
