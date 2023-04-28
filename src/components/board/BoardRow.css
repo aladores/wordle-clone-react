@@ -19,3 +19,15 @@
 .tile::before {
   width: 90px;
 }
+
+.green {
+  background-color: #6ca965;
+}
+
+.grey {
+  background-color: #787c7f;
+}
+
+.yellow {
+  background-color: #c8b653;
+}
