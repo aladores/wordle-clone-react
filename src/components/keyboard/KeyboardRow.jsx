@@ -10,8 +10,15 @@ function KeyboardRow(props) {
       newOnClick = (item === "ENTER" ? props.handleSubmit : props.handleDelete);
       newClassName += " keyboard-special"
     }
-    return <button key={item} className={newClassName} value={item} onClick={newOnClick}> {item} </button>
-  })
+    return (
+      <button 
+        key={item} 
+        className={newClassName} 
+        value={item} 
+        onClick={newOnClick}> 
+        {item}
+      </button>);
+  });
   
   return (
     <div className="keyboardRow">
