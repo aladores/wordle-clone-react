@@ -20,3 +20,15 @@
 .keyboard-special {
   width: 75px;
 }
+
+.dark-grey {
+  background-color: rgb(69, 69, 69);
+}
+
+.green {
+  background-color: green;
+}
+
+.yellow {
+  background-color: rgb(155, 176, 0);
+}

@@ -1,7 +1,11 @@
-.keyboard{
- display: flex; 
- align-items: center;
- justify-content: center;
- flex-direction: column;  
- gap:8px;
+.keyboard {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.yellow {
+  background-color: rgb(133, 133, 0);
 }

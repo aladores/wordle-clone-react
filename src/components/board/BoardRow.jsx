@@ -2,8 +2,7 @@
 import './BoardRow.css'
 
 function BoardRow(props) {
-
-  
+    
   const tiles = props.boardRow.map((item,index)=>{
     let newTileClass = "tile";
     if (props.submittedRow === true){
