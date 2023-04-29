@@ -2,30 +2,33 @@
 import './BoardRow.css'
 
 function BoardRow(props) {
-  const tiles = [];
-  function createTiles(){
-    for (let i=0;i<props.boardRow.length; i++){
-      if (props.submittedRow === true){
-        if (props.word[i] === props.boardRow[i]){
-          tiles.push(<div key={[i]} className="tile green">{props.boardRow[i]}</div>);
-        }
-        else if(props.word.includes(props.boardRow[i])){
-          tiles.push(<div key={[i]} className="tile yellow">{props.boardRow[i]}</div>);
-        }
-        else{
-          tiles.push(<div key={[i]} className="tile grey">{props.boardRow[i]}</div>);
-        }
-       
+
+  
+  const tiles = props.boardRow.map((item,index)=>{
+    let newTileClass = "tile";
+    if (props.submittedRow === true){
+      //Letter is correct and in right place
+      if (props.word[index] === item){
+        newTileClass += " green";
       }
+      //Letter is correct but in wrong place
+      else if (props.word.includes(item)){
+        newTileClass += " yellow";
+      }
+      //Letter is incorrect
       else{
-        tiles.push(<div key={[i]} className="tile">{props.boardRow[i]}</div>);
+        newTileClass += " grey";
       }
-        
     }
+    return (
+      <div 
+        key={[index]} 
+        className={newTileClass}>
+        {item}
+      </div>
+      );
+  });
 
-  }
-
-  createTiles();
   return (
     <div className="boardRow">
       {tiles}

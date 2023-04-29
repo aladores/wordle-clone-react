@@ -14,6 +14,9 @@ function Board(props) {
   });
 
   function fillCurrentGuess(){
+      // if (props.currentRow === 7){
+      //   return;
+      // }
       let updatedRow = [
         props.currentGuess[0],
         props.currentGuess[1],
