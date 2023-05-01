@@ -23,7 +23,7 @@ function App() {
     4: false,
     5: false,
   });
-  const winningWord = "LISTS";
+  const winningWord = "FATED";
 
   // const winningWordCount = winningWord.split("").reduce((count, char) => {
   //   count[char] = (count[char] || 0) + 1;
@@ -68,18 +68,44 @@ function App() {
 
     return newLetterStatus;
   }
-
   function handleClick(event) {
-    if (currentGuess.length >= 5) {
-      console.log("error");
+    handleNewLetter(event);
+  }
+
+  function handleNewLetter(event) {
+    let newLetter =
+      event.type === "click" ? event.target.value : event.key.toUpperCase();
+
+    //If tab is pressed
+    if (event.keyCode == 9) {
       return;
     }
-    setCurrentGuess((currentGuess) => [...currentGuess, event.target.value]);
+    //Keyboard press
+    if (event.type === "keydown") {
+      if (newLetter === "BACKSPACE") {
+        handleDelete();
+        return;
+      }
+      if (newLetter === "ENTER") {
+        handleSubmit();
+        return;
+      }
+      if (!/^[A-Za-z]$/.test(event.key)) {
+        return;
+      }
+    }
+
+    if (currentGuess.length >= 5) {
+      console.log("Error: Current guess is full.");
+      return;
+    }
+
+    setCurrentGuess((currentGuess) => [...currentGuess, newLetter]);
   }
 
   function handleSubmit() {
     if (gameWon || gameLost) {
-      console.log("Game already completed");
+      console.log("Error: Game already completed.");
       return;
     }
     //If word is not in the list
@@ -87,13 +113,12 @@ function App() {
 
     //Not enough letters
     if (currentGuess.length !== 5) {
-      console.log("error");
+      console.log("Error: Not enough letters.");
       return;
     }
 
     if (currentGuess.length === 5) {
       const currentGuessJoined = currentGuess.join("");
-      //checkLetterStatus();
       setGuessHistory((guessHistory) => [...guessHistory, currentGuess]);
       setCurrentRow((currentRow) => currentRow + 1);
       setSubmittedRow((prevSubmit) => ({
@@ -113,16 +138,20 @@ function App() {
 
   function handleDelete() {
     if (gameWon || gameLost) {
-      console.log("Game already completed");
+      console.log("Error: Game already completed.");
       return;
     }
     if (currentGuess.length === 0) {
-      console.log("error");
+      console.log("Error: Current Guess is Empty.");
       return;
     }
     setCurrentGuess((currentGuess) => currentGuess.slice(0, -1));
   }
 
+  useEffect(() => {
+    window.addEventListener("keydown", handleNewLetter);
+    return () => window.removeEventListener("keydown", handleNewLetter);
+  });
   useEffect(() => {
     const newLetterStatus = checkLetterStatus(guessHistory, winningWord);
     setLetterStatus(newLetterStatus);
@@ -150,6 +179,7 @@ function App() {
         <Keyboard
           guessHistory={guessHistory}
           handleClick={handleClick}
+          //handleNewLetter={handleNewLetter}
           currentGuess={currentGuess}
           winningWord={winningWord}
           handleSubmit={handleSubmit}

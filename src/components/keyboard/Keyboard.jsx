@@ -17,6 +17,7 @@ function Keyboard(props) {
         winningWord={props.winningWord}
         guessHistory={props.guessHistory}
         handleClick={props.handleClick}
+        handleNewLetter={props.handleNewLetter}
         handleSubmit={props.handleSubmit}
         handleDelete={props.handleDelete}
         letterStatus={props.letterStatus}

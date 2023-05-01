@@ -14,22 +14,12 @@ function BoardRow(props) {
     let newTileClass = "tile";
     let newClassColor = "";
     if (props.submittedRow === true) {
-      //Letter is correct and in right position
-      if (props.winningWord[index] === item) {
+      if (props.winningWord.indexOf(item) === -1) {
+        newClassColor = "dark-grey";
+      } else if (props.winningWord[index] === item) {
         newClassColor = "green";
-      }
-      // Letter is correct but in the wrong place
-      else if (props.winningWord.includes(item)) {
-        if (props.winningWord.indexOf(item) !== index) {
-          // Check if the item is in the correct position already
-          newClassColor = "grey";
-        } else {
-          newClassColor = "yellow";
-        }
-      }
-      //Letter is incorrect
-      else {
-        newClassColor = "grey";
+      } else {
+        newClassColor = "yellow";
       }
     }
     const combinedClassName = `${newTileClass} ${newClassColor}`;
