@@ -1,15 +1,19 @@
-.app{
+body,
+html,
+.h1 {
+  margin: 0;
+  padding: 0;
+}
+
+.app {
   display: flex;
   flex-direction: column;
   align-items: center;
-  height:100vh;
-
+  height: 100vh;
 }
-.main-container{
+.main-container {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   height: 100%;
 }
-
-

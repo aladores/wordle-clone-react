@@ -1,11 +1,17 @@
-import './Header.css'
+import "./Header.css";
 
 function Header() {
   return (
-    <div className="header">
-      <p>header</p>
-    </div>
-  )
+    <header className="header">
+      <div className="menu"></div>
+      <div className="header-text">
+        <h1>Wordle</h1>
+      </div>
+      <div className="header-settings">
+        <button className="color-theme-button">C</button>
+      </div>
+    </header>
+  );
 }
 
-export default Header
+export default Header;

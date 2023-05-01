@@ -9,6 +9,7 @@ function App() {
   const [gameLost, setGameLost] = useState(false);
   const [currentGuess, setCurrentGuess] = useState([]);
   const [guessHistory, setGuessHistory] = useState([]);
+  const [updatedIndex, setUpdatedIndex] = useState(0);
   const [letterStatus, setLetterStatus] = useState({
     correctLetters: [],
     closeLetters: [],
@@ -25,6 +26,7 @@ function App() {
   });
   const winningWord = "FATED";
 
+  console.log(updatedIndex);
   // const winningWordCount = winningWord.split("").reduce((count, char) => {
   //   count[char] = (count[char] || 0) + 1;
   //   return count;
@@ -48,23 +50,6 @@ function App() {
         }
       }
     });
-
-    // console.log("closeLetters before", newLetterStatus.closeLetters);
-
-    // //Check if the close letter is already correct in another position
-    // newLetterStatus.closeLetters = newLetterStatus.closeLetters.filter(
-    //   (letter) => {
-    //     if (
-    //       letter.includes(newLetterStatus.correctLetters) &&
-    //       winningWordCount[letter] > 0
-    //     ) {
-    //       console.log(true);
-    //       return false;
-    //     }
-    //     return true;
-    //   }
-    // );
-    // console.log("closeLetters after", newLetterStatus.closeLetters);
 
     return newLetterStatus;
   }
@@ -101,6 +86,9 @@ function App() {
     }
 
     setCurrentGuess((currentGuess) => [...currentGuess, newLetter]);
+
+    const index = currentGuess.length - 1;
+    setUpdatedIndex(index);
   }
 
   function handleSubmit() {
@@ -175,11 +163,11 @@ function App() {
           currentRow={currentRow}
           winningWord={winningWord}
           submittedRow={submittedRow}
+          updatedIndex={updatedIndex}
         />
         <Keyboard
           guessHistory={guessHistory}
           handleClick={handleClick}
-          //handleNewLetter={handleNewLetter}
           currentGuess={currentGuess}
           winningWord={winningWord}
           handleSubmit={handleSubmit}

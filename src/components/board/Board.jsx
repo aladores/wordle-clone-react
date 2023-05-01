@@ -13,8 +13,9 @@ function Board(props) {
     boardRow6: ["", "", "", "", ""],
   });
 
-  function fillCurrentGuess() {
-    let updatedRow = [
+  useEffect(() => {
+    const updatedRowKey = `boardRow${props.currentRow}`;
+    const updatedRow = [
       props.currentGuess[0],
       props.currentGuess[1],
       props.currentGuess[2],
@@ -24,13 +25,9 @@ function Board(props) {
 
     setBoard((prevBoard) => ({
       ...prevBoard,
-      [`boardRow${props.currentRow}`]: updatedRow,
+      [updatedRowKey]: updatedRow,
     }));
-  }
-
-  useEffect(() => {
-    fillCurrentGuess();
-  }, [props.currentGuess]);
+  }, [props.currentGuess, props.currentRow]);
 
   const boardRowElements = Object.keys(board).map((rowKey, rowIndex) => (
     <BoardRow
@@ -39,6 +36,7 @@ function Board(props) {
       winningWord={props.winningWord}
       currentGuess={props.currentGuess}
       submittedRow={props.submittedRow[rowIndex]}
+      updatedIndex={props.updatedIndex}
     />
   ));
 

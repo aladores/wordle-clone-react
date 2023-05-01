@@ -16,10 +16,6 @@
   width: 60px;
 }
 
-.tile::before {
-  width: 90px;
-}
-
 .green {
   background-color: #6ca965;
   height: 62px;
@@ -39,4 +35,22 @@
   height: 62px;
   width: 62px;
   border: 0px;
+}
+
+.filled {
+  animation: bounce 0.2s ease-in-out forwards;
+}
+
+@keyframes bounce {
+  0% {
+    transform: scale(1);
+    border-color: #ddd;
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+    border-color: grey;
+  }
 }
