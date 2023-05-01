@@ -23,29 +23,50 @@ function App() {
     4: false,
     5: false,
   });
-  const winningWord = "GREAT";
+  const winningWord = "LISTS";
 
-  function checkLetterStatus() {
+  // const winningWordCount = winningWord.split("").reduce((count, char) => {
+  //   count[char] = (count[char] || 0) + 1;
+  //   return count;
+  // }, {});
+  function checkLetterStatus(guessHistory, winningWord) {
+    const newLetterStatus = {
+      correctLetters: [],
+      closeLetters: [],
+      wrongLetters: [],
+    };
+
     guessHistory.forEach((word) => {
       for (let i = 0; i < word.length; i++) {
         if (word[i] === winningWord[i]) {
-          setLetterStatus((prevLetterStatus) => ({
-            ...prevLetterStatus,
-            correctLetters: [...prevLetterStatus.correctLetters, ...word[i]],
-          }));
+          newLetterStatus.correctLetters.push(word[i]);
         } else if (winningWord.includes(word[i])) {
-          setLetterStatus((prevLetterStatus) => ({
-            ...prevLetterStatus,
-            closeLetters: [...prevLetterStatus.closeLetters, ...word[i]],
-          }));
+          //if(word[i].includes(newLetterStatus.correctLetters))
+          newLetterStatus.closeLetters.push(word[i]);
         } else {
-          setLetterStatus((prevLetterStatus) => ({
-            ...prevLetterStatus,
-            wrongLetters: [...prevLetterStatus.wrongLetters, ...word[i]],
-          }));
+          newLetterStatus.wrongLetters.push(word[i]);
         }
       }
     });
+
+    // console.log("closeLetters before", newLetterStatus.closeLetters);
+
+    // //Check if the close letter is already correct in another position
+    // newLetterStatus.closeLetters = newLetterStatus.closeLetters.filter(
+    //   (letter) => {
+    //     if (
+    //       letter.includes(newLetterStatus.correctLetters) &&
+    //       winningWordCount[letter] > 0
+    //     ) {
+    //       console.log(true);
+    //       return false;
+    //     }
+    //     return true;
+    //   }
+    // );
+    // console.log("closeLetters after", newLetterStatus.closeLetters);
+
+    return newLetterStatus;
   }
 
   function handleClick(event) {
@@ -103,7 +124,8 @@ function App() {
   }
 
   useEffect(() => {
-    checkLetterStatus();
+    const newLetterStatus = checkLetterStatus(guessHistory, winningWord);
+    setLetterStatus(newLetterStatus);
   }, [guessHistory]);
 
   useEffect(() => {
@@ -122,7 +144,7 @@ function App() {
           currentGuess={currentGuess}
           guessHistory={guessHistory}
           currentRow={currentRow}
-          word={winningWord}
+          winningWord={winningWord}
           submittedRow={submittedRow}
         />
         <Keyboard

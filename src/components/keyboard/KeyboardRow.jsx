@@ -19,15 +19,12 @@ function KeyboardRow(props) {
 
     if (wrongLettersSet.has(item)) {
       newClassColor = "dark-grey";
-      console.log(item);
     }
     if (closeLettersSet.has(item)) {
       newClassColor = "yellow";
-      console.log(item);
     }
     if (correctLettersSet.has(item)) {
       newClassColor = "green";
-      console.log(item);
     }
     const combinedClassName = `${newClassName} ${newClassColor}`;
     return (
