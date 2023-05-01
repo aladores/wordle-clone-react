@@ -19,9 +19,7 @@ function Keyboard(props) {
         handleClick={props.handleClick}
         handleSubmit={props.handleSubmit}
         handleDelete={props.handleDelete}
-        correctLetters={props.correctLetters}
-        closeLetters={props.closeLetters}
-        wrongLetters={props.wrongLetters}
+        letterStatus={props.letterStatus}
       />
     );
   });

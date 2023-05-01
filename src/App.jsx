@@ -9,6 +9,11 @@ function App() {
   const [gameLost, setGameLost] = useState(false);
   const [currentGuess, setCurrentGuess] = useState([]);
   const [guessHistory, setGuessHistory] = useState([]);
+  const [letterStatus, setLetterStatus] = useState({
+    correctLetters: [],
+    closeLetters: [],
+    wrongLetters: [],
+  });
   const [currentRow, setCurrentRow] = useState(1);
   const [submittedRow, setSubmittedRow] = useState({
     0: false,
@@ -20,25 +25,29 @@ function App() {
   });
   const winningWord = "GREAT";
 
-  const correctLetters = [];
-  const closeLetters = [];
-  const wrongLetters = [];
-
-  guessHistory.forEach((word) => {
-    for (let i = 0; i < word.length; i++) {
-      if (word[i] === winningWord[i]) {
-        correctLetters.push(word[i]);
-      } else if (winningWord.includes(word[i])) {
-        closeLetters.push(word[i]);
-      } else {
-        wrongLetters.push(word[i]);
+  function checkLetterStatus() {
+    guessHistory.forEach((word) => {
+      for (let i = 0; i < word.length; i++) {
+        if (word[i] === winningWord[i]) {
+          setLetterStatus((prevLetterStatus) => ({
+            ...prevLetterStatus,
+            correctLetters: [...prevLetterStatus.correctLetters, ...word[i]],
+          }));
+        } else if (winningWord.includes(word[i])) {
+          setLetterStatus((prevLetterStatus) => ({
+            ...prevLetterStatus,
+            closeLetters: [...prevLetterStatus.closeLetters, ...word[i]],
+          }));
+        } else {
+          setLetterStatus((prevLetterStatus) => ({
+            ...prevLetterStatus,
+            wrongLetters: [...prevLetterStatus.wrongLetters, ...word[i]],
+          }));
+        }
       }
-    }
-  });
+    });
+  }
 
-  // console.log("Correct: ", correctLetters);
-  // console.log("Close:", closeLetters);
-  // console.log("Guessed: ", wrongLetters);
   function handleClick(event) {
     if (currentGuess.length >= 5) {
       console.log("error");
@@ -63,12 +72,14 @@ function App() {
 
     if (currentGuess.length === 5) {
       const currentGuessJoined = currentGuess.join("");
+      //checkLetterStatus();
       setGuessHistory((guessHistory) => [...guessHistory, currentGuess]);
       setCurrentRow((currentRow) => currentRow + 1);
       setSubmittedRow((prevSubmit) => ({
         ...prevSubmit,
         [currentRow - 1]: true,
       }));
+
       if (currentGuessJoined === winningWord) {
         return setGameWon(true);
       }
@@ -90,6 +101,10 @@ function App() {
     }
     setCurrentGuess((currentGuess) => currentGuess.slice(0, -1));
   }
+
+  useEffect(() => {
+    checkLetterStatus();
+  }, [guessHistory]);
 
   useEffect(() => {
     if (gameLost) {
@@ -117,9 +132,7 @@ function App() {
           winningWord={winningWord}
           handleSubmit={handleSubmit}
           handleDelete={handleDelete}
-          correctLetters={correctLetters}
-          closeLetters={closeLetters}
-          wrongLetters={wrongLetters}
+          letterStatus={letterStatus}
         />
       </main>
     </div>
