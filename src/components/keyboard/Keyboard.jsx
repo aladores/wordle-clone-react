@@ -20,7 +20,7 @@ function Keyboard(props) {
         handleNewLetter={props.handleNewLetter}
         handleSubmit={props.handleSubmit}
         handleDelete={props.handleDelete}
-        letterStatus={props.letterStatus}
+        keyboardColors={props.keyboardColors}
       />
     );
   });

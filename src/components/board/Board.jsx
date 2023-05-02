@@ -24,6 +24,7 @@ function Board(props) {
           guess={props.currentGuess}
           submitted={false}
           getCellColor={props.getCellColor}
+          currentRowClass={props.currentRowClass}
           isCurrentGuessRow={true}
         />
       );

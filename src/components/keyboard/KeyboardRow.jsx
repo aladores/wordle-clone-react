@@ -2,9 +2,9 @@
 import "./KeyboardRow.css";
 
 function KeyboardRow(props) {
-  const correctLettersSet = new Set(props.letterStatus.correctLetters);
-  const closeLettersSet = new Set(props.letterStatus.closeLetters);
-  const wrongLettersSet = new Set(props.letterStatus.wrongLetters);
+  const correctLettersSet = new Set(props.keyboardColors.correctLetters);
+  const closeLettersSet = new Set(props.keyboardColors.closeLetters);
+  const wrongLettersSet = new Set(props.keyboardColors.wrongLetters);
 
   const buttonElements = props.row.map((item) => {
     let newOnClick = props.handleClick;
@@ -14,8 +14,6 @@ function KeyboardRow(props) {
       newOnClick = item === "ENTER" ? props.handleSubmit : props.handleDelete;
       newClassName += " keyboard-special";
     }
-
-    //props.letterStatus.correctLetters.map((letter) => console.log(letter));
 
     if (wrongLettersSet.has(item)) {
       newClassColor = "dark-grey";

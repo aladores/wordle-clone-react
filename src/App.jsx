@@ -8,47 +8,14 @@ function App() {
   const [gameWon, setGameWon] = useState(false);
   const [gameLost, setGameLost] = useState(false);
   const [currentGuess, setCurrentGuess] = useState([]);
+  const [currentRowClass, setCurrentRowClass] = useState("");
   const [guessHistory, setGuessHistory] = useState([]);
-  const [letterStatus, setLetterStatus] = useState({
+  const [keyboardColors, setKeyboardColors] = useState({
     correctLetters: [],
     closeLetters: [],
     wrongLetters: [],
   });
   const winningWord = "FATED";
-
-  function checkLetterStatus(guessHistory, winningWord) {
-    const newLetterStatus = {
-      correctLetters: [],
-      closeLetters: [],
-      wrongLetters: [],
-    };
-
-    guessHistory.forEach((word) => {
-      for (let i = 0; i < word.length; i++) {
-        if (word[i] === winningWord[i]) {
-          newLetterStatus.correctLetters.push(word[i]);
-        } else if (winningWord.includes(word[i])) {
-          //if(word[i].includes(newLetterStatus.correctLetters))
-          newLetterStatus.closeLetters.push(word[i]);
-        } else {
-          newLetterStatus.wrongLetters.push(word[i]);
-        }
-      }
-    });
-    return newLetterStatus;
-  }
-
-  function getCellColor(guess, i) {
-    let correctLetter = winningWord[i];
-    let guessLetter = guess[i];
-    if (winningWord.indexOf(guessLetter) === -1) {
-      return "dark-grey";
-    }
-    if (correctLetter === guessLetter) {
-      return "green";
-    }
-    return "yellow";
-  }
 
   function handleClick(event) {
     handleNewLetter(event);
@@ -92,15 +59,20 @@ function App() {
     }
     //If word is not in the list
     //if()
-
+    //setCurrentRowClass("shake");
+    //setCurrentRowClass("");
     //Not enough letters
     if (currentGuess.length !== 5) {
       console.log("Error: Not enough letters.");
       return;
     }
 
+    const currentGuessJoined = currentGuess.join("");
     if (currentGuess.length === 5) {
-      const currentGuessJoined = currentGuess.join("");
+      //setTimeout(() => {
+      //setCurrentRowClass("submitted");
+      //}, 500); // Adjust the delay time as needed
+
       setGuessHistory((guessHistory) => [...guessHistory, currentGuess]);
 
       if (currentGuessJoined === winningWord) {
@@ -125,13 +97,47 @@ function App() {
     setCurrentGuess((currentGuess) => currentGuess.slice(0, -1));
   }
 
+  function getKeyboardColor(guessHistory, winningWord) {
+    const newKeyboardColors = {
+      correctLetters: [],
+      closeLetters: [],
+      wrongLetters: [],
+    };
+
+    guessHistory.forEach((word) => {
+      for (let i = 0; i < word.length; i++) {
+        if (word[i] === winningWord[i]) {
+          newKeyboardColors.correctLetters.push(word[i]);
+        } else if (winningWord.includes(word[i])) {
+          //if(word[i].includes(newKeyboardColors.correctLetters))
+          newKeyboardColors.closeLetters.push(word[i]);
+        } else {
+          newKeyboardColors.wrongLetters.push(word[i]);
+        }
+      }
+    });
+    return newKeyboardColors;
+  }
+
+  function getCellColor(guess, i) {
+    let correctLetter = winningWord[i];
+    let guessLetter = guess[i];
+    if (winningWord.indexOf(guessLetter) === -1) {
+      return "dark-grey";
+    }
+    if (correctLetter === guessLetter) {
+      return "green";
+    }
+    return "yellow";
+  }
+
   useEffect(() => {
     window.addEventListener("keydown", handleNewLetter);
     return () => window.removeEventListener("keydown", handleNewLetter);
   });
   useEffect(() => {
-    const newLetterStatus = checkLetterStatus(guessHistory, winningWord);
-    setLetterStatus(newLetterStatus);
+    const newKeyboardColors = getKeyboardColor(guessHistory, winningWord);
+    setKeyboardColors(newKeyboardColors);
   }, [guessHistory]);
 
   useEffect(() => {
@@ -150,6 +156,7 @@ function App() {
           currentGuess={currentGuess}
           guessHistory={guessHistory}
           winningWord={winningWord}
+          currentRowClass={currentRowClass}
           getCellColor={getCellColor}
         />
         <Keyboard
@@ -159,7 +166,7 @@ function App() {
           winningWord={winningWord}
           handleSubmit={handleSubmit}
           handleDelete={handleDelete}
-          letterStatus={letterStatus}
+          keyboardColors={keyboardColors}
         />
       </main>
     </div>

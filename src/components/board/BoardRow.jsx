@@ -14,11 +14,14 @@ function BoardRow(props) {
         guess={props.guess}
         submitted={props.submitted}
         getCellColor={props.getCellColor}
+        currentRowClass={props.currentRowClass}
         isCurrentGuessRow={props.isCurrentGuessRow}
       />
     );
   }
-  return <div className="boardRow">{cells}</div>;
+  // <div className={"boardRow" + (props.submitted ? ` submitted` : "")}>
+
+  return <div className={"boardRow"}>{cells}</div>;
 }
 
 export default BoardRow;
