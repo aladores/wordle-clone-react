@@ -1,30 +1,24 @@
 /* eslint-disable react/prop-types */
+/* eslint-disable no-undef */
 import "./BoardRow.css";
 
+import Cell from "./Cell";
+
 function BoardRow(props) {
-  const tiles = props.boardRow.map((item, index) => {
-    let newTileClass = "tile";
-    let bounceClass = "";
-    let newClassColor = "";
-    if (props.submittedRow === true) {
-      if (props.winningWord.indexOf(item) === -1) {
-        newClassColor = "dark-grey";
-      } else if (props.winningWord[index] === item) {
-        newClassColor = "green";
-      } else {
-        newClassColor = "yellow";
-      }
-    }
-
-    const combinedClassName = `${newTileClass} ${bounceClass} ${newClassColor}`;
-    return (
-      <div key={[index]} className={combinedClassName}>
-        {item}
-      </div>
+  let cells = [];
+  for (let i = 0; i < 5; i++) {
+    cells.push(
+      <Cell
+        key={i}
+        index={i}
+        guess={props.guess}
+        submitted={props.submitted}
+        getCellColor={props.getCellColor}
+        isCurrentGuessRow={props.isCurrentGuessRow}
+      />
     );
-  });
-
-  return <div className="boardRow">{tiles}</div>;
+  }
+  return <div className="boardRow">{cells}</div>;
 }
 
 export default BoardRow;

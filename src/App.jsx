@@ -9,28 +9,13 @@ function App() {
   const [gameLost, setGameLost] = useState(false);
   const [currentGuess, setCurrentGuess] = useState([]);
   const [guessHistory, setGuessHistory] = useState([]);
-  const [updatedIndex, setUpdatedIndex] = useState(0);
   const [letterStatus, setLetterStatus] = useState({
     correctLetters: [],
     closeLetters: [],
     wrongLetters: [],
   });
-  const [currentRow, setCurrentRow] = useState(1);
-  const [submittedRow, setSubmittedRow] = useState({
-    0: false,
-    1: false,
-    2: false,
-    3: false,
-    4: false,
-    5: false,
-  });
   const winningWord = "FATED";
 
-  console.log(updatedIndex);
-  // const winningWordCount = winningWord.split("").reduce((count, char) => {
-  //   count[char] = (count[char] || 0) + 1;
-  //   return count;
-  // }, {});
   function checkLetterStatus(guessHistory, winningWord) {
     const newLetterStatus = {
       correctLetters: [],
@@ -50,9 +35,21 @@ function App() {
         }
       }
     });
-
     return newLetterStatus;
   }
+
+  function getCellColor(guess, i) {
+    let correctLetter = winningWord[i];
+    let guessLetter = guess[i];
+    if (winningWord.indexOf(guessLetter) === -1) {
+      return "dark-grey";
+    }
+    if (correctLetter === guessLetter) {
+      return "green";
+    }
+    return "yellow";
+  }
+
   function handleClick(event) {
     handleNewLetter(event);
   }
@@ -86,9 +83,6 @@ function App() {
     }
 
     setCurrentGuess((currentGuess) => [...currentGuess, newLetter]);
-
-    const index = currentGuess.length - 1;
-    setUpdatedIndex(index);
   }
 
   function handleSubmit() {
@@ -108,11 +102,6 @@ function App() {
     if (currentGuess.length === 5) {
       const currentGuessJoined = currentGuess.join("");
       setGuessHistory((guessHistory) => [...guessHistory, currentGuess]);
-      setCurrentRow((currentRow) => currentRow + 1);
-      setSubmittedRow((prevSubmit) => ({
-        ...prevSubmit,
-        [currentRow - 1]: true,
-      }));
 
       if (currentGuessJoined === winningWord) {
         return setGameWon(true);
@@ -160,10 +149,8 @@ function App() {
         <Board
           currentGuess={currentGuess}
           guessHistory={guessHistory}
-          currentRow={currentRow}
           winningWord={winningWord}
-          submittedRow={submittedRow}
-          updatedIndex={updatedIndex}
+          getCellColor={getCellColor}
         />
         <Keyboard
           guessHistory={guessHistory}
