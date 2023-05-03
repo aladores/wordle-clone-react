@@ -17,27 +17,6 @@
   border: 1px solid #5e5e5e;
 }
 
-.medium-green {
-  background-color: #6ca965;
-  height: 60px;
-  width: 60px;
-  border: 1px solid #6ca965;
-}
-
-.dark-grey {
-  background-color: #3a3a3c;
-  height: 60px;
-  width: 60px;
-  border: 1px solid #3a3a3c;
-}
-
-.medium-yellow {
-  background-color: #ceb337;
-  height: 60px;
-  width: 60px;
-  border: 1px solid #ceb337;
-}
-
 .submitted .flip-container {
   transform: rotateX(180deg);
 }

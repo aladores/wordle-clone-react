@@ -9,6 +9,8 @@ function App() {
   const [gameLost, setGameLost] = useState(false);
   const [currentGuess, setCurrentGuess] = useState([]);
   const [currentRowClass, setCurrentRowClass] = useState("");
+  const [isAnimating, setIsAnimating] = useState(false);
+
   const [guessHistory, setGuessHistory] = useState([]);
   const [keyboardColors, setKeyboardColors] = useState({
     correctLetters: [],
@@ -22,6 +24,14 @@ function App() {
   }
 
   function handleNewLetter(event) {
+    if (gameLost || gameWon) {
+      console.log("Error: Game already completed.");
+      return;
+    }
+    if (isAnimating) {
+      console.log("Error: Cannot enter letter until animation is complete.");
+      return;
+    }
     let newLetter =
       event.type === "click" ? event.target.value : event.key.toUpperCase();
 
@@ -50,6 +60,7 @@ function App() {
     }
 
     setCurrentGuess((currentGuess) => [...currentGuess, newLetter]);
+    return;
   }
 
   function handleSubmit() {
@@ -61,27 +72,26 @@ function App() {
     //if()
     //setCurrentRowClass("shake");
     //setCurrentRowClass("");
-    //Not enough letters
+
     if (currentGuess.length !== 5) {
       console.log("Error: Not enough letters.");
       return;
     }
 
-    const currentGuessJoined = currentGuess.join("");
     if (currentGuess.length === 5) {
-      //setTimeout(() => {
       //setCurrentRowClass("submitted");
-      //}, 500); // Adjust the delay time as needed
-
+      const currentGuessJoined = currentGuess.join("");
       setGuessHistory((guessHistory) => [...guessHistory, currentGuess]);
-
+      setIsAnimating(true);
+      setCurrentGuess("");
       if (currentGuessJoined === winningWord) {
+        console.log("Here winning");
         return setGameWon(true);
       }
       if (guessHistory.length > 4) {
         return setGameLost(true);
       }
-      setCurrentGuess("");
+      //setCurrentGuess("");
     }
   }
 
@@ -130,6 +140,14 @@ function App() {
     }
     return "medium-yellow";
   }
+
+  useEffect(() => {
+    if (isAnimating === true) {
+      setTimeout(() => {
+        setIsAnimating(false);
+      }, 2000);
+    }
+  }, [isAnimating]);
 
   useEffect(() => {
     window.addEventListener("keydown", handleNewLetter);
