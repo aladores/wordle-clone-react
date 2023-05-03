@@ -126,9 +126,9 @@ function App() {
       return "dark-grey";
     }
     if (correctLetter === guessLetter) {
-      return "green";
+      return "medium-green";
     }
-    return "yellow";
+    return "medium-yellow";
   }
 
   useEffect(() => {

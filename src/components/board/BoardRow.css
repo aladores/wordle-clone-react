@@ -1,32 +1,48 @@
-.green {
-  background-color: #6ca965;
-  height: 61px;
-  width: 61px;
-}
-
-.dark-grey {
-  background-color: #3a3a3c;
-  height: 61px;
-  width: 61px;
-}
-
-.yellow {
-  background-color: #b59f3b;
-  height: 61px;
-  width: 61px;
-  border-color: yellow;
-}
 .boardRow {
   display: flex;
   justify-content: center;
   gap: 7px;
 }
 
+.front:empty::before {
+  content: "\A0";
+  height: 60px;
+  width: 60px;
+  border: 1px solid #5e5e5e;
+}
+
+.front {
+  height: 60px;
+  width: 60px;
+  border: 1px solid #5e5e5e;
+}
+
+.medium-green {
+  background-color: #6ca965;
+  height: 60px;
+  width: 60px;
+  border: 1px solid #6ca965;
+}
+
+.dark-grey {
+  background-color: #3a3a3c;
+  height: 60px;
+  width: 60px;
+  border: 1px solid #3a3a3c;
+}
+
+.medium-yellow {
+  background-color: #ceb337;
+  height: 60px;
+  width: 60px;
+  border: 1px solid #ceb337;
+}
+
 .submitted .flip-container {
   transform: rotateX(180deg);
 }
 
-.tile .flip-container {
+.flip-container {
   transition-duration: 800ms;
   transform-style: preserve-3d;
   position: relative;
@@ -37,7 +53,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid #5e5e5e;
+  display: inline-block;
   font-size: 2rem;
   font-weight: bold;
   height: 60px;
@@ -45,8 +61,8 @@
   perspective: 1000px;
 }
 
-.tile .front,
-.tile .back {
+.front,
+.back {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -56,34 +72,27 @@
   right: 0;
   bottom: 0;
   left: 0;
-  border: none;
-  transition: border 0.5s ease;
 }
 
-.tile .front {
-  z-index: 2;
-}
 .tile .back {
   z-index: 1;
   transform: rotateX(180deg);
 }
 
 .filled {
-  animation: bounce 0.2s ease-in-out forwards;
+  border: 1px solid rgb(167, 166, 166);
 }
 
-.submitted {
-  border: 1px solid white;
-  animation: remove-border-animation 2s forwards;
+.active {
+  animation: bounce 0.1s ease-in-out forwards;
 }
 
 @keyframes bounce {
   0% {
     transform: scale(1);
-    border-color: #ddd;
   }
   50% {
-    transform: scale(1.1);
+    transform: scale(1.05);
   }
   100% {
     transform: scale(1);
@@ -105,33 +114,5 @@
   }
   50% {
     transform: translateX(-5px);
-  }
-}
-
-.active {
-  border: 1px solid white;
-  border-color: rgb(169, 169, 169);
-}
-.empty {
-}
-
-@keyframes remove-border-animation {
-  0% {
-    border-color: #5e5e5e;
-  }
-  100% {
-    border-color: transparent;
-  }
-}
-
-@keyframes flip {
-  0% {
-    transform: scaleY(1);
-  }
-  50% {
-    transform: scaleY(0);
-  }
-  100% {
-    transform: scaleY(1);
   }
 }

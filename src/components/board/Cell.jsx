@@ -12,13 +12,14 @@ function Cell(props) {
 
   //Class names
   let cellClassName = "tile";
+  let cellStatusClass = "";
   let backClass = "back";
   let isActive = false;
   if (hasLetter) {
-    cellClassName += " filled";
+    cellStatusClass += "filled";
     isActive = true;
   } else {
-    cellClassName += " empty";
+    cellStatusClass += "empty";
   }
 
   if (props.submitted) {
@@ -34,17 +35,22 @@ function Cell(props) {
   //<div className={`${cellClassName}`}>
 
   return (
-    <div className={`${cellClassName}${isActive ? "active" : ""}`}>
+    <div className={`${cellClassName}`}>
       <div
         className="flip-container"
         style={{
+          animationDelay: props.index * 300 + "ms",
           transitionDelay: props.index * 300 + "ms",
         }}
       >
-        <div className="front">{cellElement}</div>
-        <div className={backClass} style={{ borderColor: hasColor }}>
+        <div
+          className={`front${hasLetter ? " filled" : ""}${
+            isActive ? " active" : ""
+          }`}
+        >
           {cellElement}
         </div>
+        <div className={backClass}>{cellElement}</div>
       </div>
     </div>
   );

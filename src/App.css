@@ -17,3 +17,21 @@ html,
   justify-content: space-evenly;
   height: 100%;
 }
+
+.medium-green {
+  background-color: #538d4e;
+
+  border: 1px solid #538d4e;
+}
+
+.dark-grey {
+  background-color: #3a3a3c;
+
+  border: 1px solid #3a3a3c;
+}
+
+.medium-yellow {
+  background-color: #ceb337;
+
+  border: 1px solid #ceb337;
+}
