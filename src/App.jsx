@@ -10,7 +10,8 @@ function App() {
   const [currentGuess, setCurrentGuess] = useState([]);
   const [currentRowClass, setCurrentRowClass] = useState("");
   const [isAnimating, setIsAnimating] = useState(false);
-
+  const [isValidWord, setIsValidWord] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [guessHistory, setGuessHistory] = useState([]);
   const [keyboardColors, setKeyboardColors] = useState({
     correctLetters: [],
@@ -68,10 +69,6 @@ function App() {
       console.log("Error: Game already completed.");
       return;
     }
-    //If word is not in the list
-    //if()
-    //setCurrentRowClass("shake");
-    //setCurrentRowClass("");
 
     if (currentGuess.length !== 5) {
       console.log("Error: Not enough letters.");
@@ -79,19 +76,27 @@ function App() {
     }
 
     if (currentGuess.length === 5) {
-      //setCurrentRowClass("submitted");
-      const currentGuessJoined = currentGuess.join("");
-      setGuessHistory((guessHistory) => [...guessHistory, currentGuess]);
-      setIsAnimating(true);
-      setCurrentGuess("");
-      if (currentGuessJoined === winningWord) {
-        console.log("Here winning");
-        return setGameWon(true);
-      }
-      if (guessHistory.length > 4) {
-        return setGameLost(true);
-      }
-      //setCurrentGuess("");
+      setIsSubmitting(true);
+      // console.log(isSubmitting);
+
+      // //If word is not in the list
+      // if (isValidWord === false) {
+      //   setCurrentRowClass("shake");
+      //   return;
+      // }
+
+      // //setCurrentRowClass("submitted");
+      // const currentGuessJoined = currentGuess.join("");
+      // setGuessHistory((guessHistory) => [...guessHistory, currentGuess]);
+      // setIsAnimating(true);
+      // setCurrentGuess("");
+
+      // if (currentGuessJoined === winningWord) {
+      //   return setGameWon(true);
+      // }
+      // if (guessHistory.length > 4) {
+      //   return setGameLost(true);
+      // }
     }
   }
 
@@ -141,6 +146,55 @@ function App() {
     return "medium-yellow";
   }
 
+  // useEffect(() => {
+  //   if (!isSubmitting) {
+  //     return;
+  //   }
+  //   console.log("hello");
+  //   const currentGuessJoined = currentGuess.join("");
+  //   console.log(currentGuessJoined);
+  //   fetch(
+  //     `https://api.dictionaryapi.dev/api/v2/entries/en/${currentGuessJoined}`
+  //   )
+  //     .then((response) => response.json())
+  //     .then((json) => setIsValidWord(json))
+  //     .catch((error) => console.error(error));
+  //   setIsSubmitting(false);
+  // }, [isSubmitting]);
+  useEffect(() => {
+    if (isSubmitting) {
+      console.log(isSubmitting);
+
+      const currentGuessJoined = currentGuess.join("");
+      fetch(
+        `https://api.dictionaryapi.dev/api/v2/entries/en/${currentGuessJoined}`
+      )
+        .then((response) => response.json())
+        .then((json) => {
+          setIsValidWord(json);
+          console.log(json);
+          //If word is not in the list
+          if (json["title"] === "'No Definitions Found'") {
+            setCurrentRowClass("shake");
+            return;
+          } else {
+            setGuessHistory((guessHistory) => [...guessHistory, currentGuess]);
+            setIsAnimating(true);
+            setCurrentGuess("");
+
+            if (currentGuessJoined === winningWord) {
+              setGameWon(true);
+            }
+            if (guessHistory.length > 4) {
+              setGameLost(true);
+            }
+          }
+        })
+        .catch((error) => console.error(error));
+
+      setIsSubmitting(false);
+    }
+  }, [isSubmitting]);
   useEffect(() => {
     if (isAnimating === true) {
       setTimeout(() => {
