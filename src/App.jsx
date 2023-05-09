@@ -10,8 +10,7 @@ function App() {
   const [currentGuess, setCurrentGuess] = useState([]);
   const [currentRowClass, setCurrentRowClass] = useState("");
   const [isAnimating, setIsAnimating] = useState(false);
-  const [isValidWord, setIsValidWord] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const [guessHistory, setGuessHistory] = useState([]);
   const [keyboardColors, setKeyboardColors] = useState({
     correctLetters: [],
@@ -64,7 +63,7 @@ function App() {
     return;
   }
 
-  function handleSubmit() {
+  async function handleSubmit() {
     if (gameWon || gameLost) {
       console.log("Error: Game already completed.");
       return;
@@ -76,27 +75,25 @@ function App() {
     }
 
     if (currentGuess.length === 5) {
-      setIsSubmitting(true);
-      // console.log(isSubmitting);
+      setCurrentRowClass("");
+      const currentGuessJoined = currentGuess.join("");
+      const isValidWord = await checkValidWord(currentGuessJoined);
+      if (isValidWord === false) {
+        setCurrentRowClass("shake");
+        return;
+      }
 
-      // //If word is not in the list
-      // if (isValidWord === false) {
-      //   setCurrentRowClass("shake");
-      //   return;
-      // }
+      //Todo: Can reduce state handling here
+      setGuessHistory((guessHistory) => [...guessHistory, currentGuess]);
+      setCurrentGuess("");
 
-      // //setCurrentRowClass("submitted");
-      // const currentGuessJoined = currentGuess.join("");
-      // setGuessHistory((guessHistory) => [...guessHistory, currentGuess]);
-      // setIsAnimating(true);
-      // setCurrentGuess("");
-
-      // if (currentGuessJoined === winningWord) {
-      //   return setGameWon(true);
-      // }
-      // if (guessHistory.length > 4) {
-      //   return setGameLost(true);
-      // }
+      setIsAnimating(true);
+      if (currentGuessJoined === winningWord) {
+        return setGameWon(true);
+      }
+      if (guessHistory.length > 4) {
+        return setGameLost(true);
+      }
     }
   }
 
@@ -146,55 +143,22 @@ function App() {
     return "medium-yellow";
   }
 
-  // useEffect(() => {
-  //   if (!isSubmitting) {
-  //     return;
-  //   }
-  //   console.log("hello");
-  //   const currentGuessJoined = currentGuess.join("");
-  //   console.log(currentGuessJoined);
-  //   fetch(
-  //     `https://api.dictionaryapi.dev/api/v2/entries/en/${currentGuessJoined}`
-  //   )
-  //     .then((response) => response.json())
-  //     .then((json) => setIsValidWord(json))
-  //     .catch((error) => console.error(error));
-  //   setIsSubmitting(false);
-  // }, [isSubmitting]);
-  useEffect(() => {
-    if (isSubmitting) {
-      console.log(isSubmitting);
-
-      const currentGuessJoined = currentGuess.join("");
-      fetch(
+  async function checkValidWord(currentGuessJoined) {
+    let isValid = false;
+    try {
+      const response = await fetch(
         `https://api.dictionaryapi.dev/api/v2/entries/en/${currentGuessJoined}`
-      )
-        .then((response) => response.json())
-        .then((json) => {
-          setIsValidWord(json);
-          console.log(json);
-          //If word is not in the list
-          if (json["title"] === "'No Definitions Found'") {
-            setCurrentRowClass("shake");
-            return;
-          } else {
-            setGuessHistory((guessHistory) => [...guessHistory, currentGuess]);
-            setIsAnimating(true);
-            setCurrentGuess("");
-
-            if (currentGuessJoined === winningWord) {
-              setGameWon(true);
-            }
-            if (guessHistory.length > 4) {
-              setGameLost(true);
-            }
-          }
-        })
-        .catch((error) => console.error(error));
-
-      setIsSubmitting(false);
+      );
+      const wordResult = await response.json();
+      if (wordResult["title"] !== "No Definitions Found") {
+        isValid = true;
+      }
+    } catch {
+      console.log("Error");
     }
-  }, [isSubmitting]);
+    return isValid;
+  }
+
   useEffect(() => {
     if (isAnimating === true) {
       setTimeout(() => {
