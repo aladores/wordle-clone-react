@@ -13,11 +13,9 @@ function Cell(props) {
 
   //Class names
   let flipContainerClass = "flip-container";
-  let cellClassName = "tile";
-  let cellStatusClass = "";
+  let cellClass = "tile";
   let backClass = "back";
   let frontClass = "front";
-  let isActive = false;
 
   if (hasLetter) {
     frontClass += " filled";
@@ -25,30 +23,35 @@ function Cell(props) {
   }
   if (props.submitted) {
     backClass += ` ${hasColor}`;
-    cellClassName += " submitted";
+    cellClass += " submitted";
 
     const guessJoined = props.currentGuess.join("");
 
     if (props.winningWord === guessJoined) {
-      console.log("Hereeeeeee:", props.gameWon);
-
       if (!props.isAnimating) {
-        frontClass = "front no-border";
-        flipContainerClass += " medium-green";
-        flipContainerClass += " win";
+        cellClass += " win";
+
+        // flipContainerClass += " medium-green";
+        // flipContainerClass += " win";
       }
     }
   }
 
   if (props.isCurrentGuessRow) {
-    cellClassName += ` ${props.currentRowClass}`;
+    cellClass += ` ${props.currentRowClass}`;
   }
 
-  //  <div className={`${cellClassName} ${isActive ? "active" : ""}`}>
-  //<div className={`${cellClassName}`}>
+  //  <div className={`${cellClass} ${isActive ? "active" : ""}`}>
+  //<div className={`${cellClass}`}>
 
   return (
-    <div className={`${cellClassName}`}>
+    <div
+      className={`${cellClass}`}
+      style={{
+        animationDelay: props.index * 100 + "ms",
+        transitionDelay: props.index * 100 + "ms",
+      }}
+    >
       <div
         className={flipContainerClass}
         style={{
@@ -57,6 +60,7 @@ function Cell(props) {
         }}
       >
         <div className={frontClass}>{cellElement}</div>
+
         <div className={backClass}>{cellElement}</div>
       </div>
     </div>
