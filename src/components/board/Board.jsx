@@ -10,9 +10,12 @@ function Board(props) {
       rows.push(
         <BoardRow
           key={i}
-          guess={props.guessHistory[i]}
+          currentGuess={props.guessHistory[i]}
+          winningWord={props.winningWord}
           submitted={true}
           getCellColor={props.getCellColor}
+          isAnimating={props.isAnimating}
+          gameWon={props.gameWon}
         />
       );
     }
@@ -21,11 +24,13 @@ function Board(props) {
       rows.push(
         <BoardRow
           key={i}
-          guess={props.currentGuess}
+          currentGuess={props.currentGuess}
           submitted={false}
           getCellColor={props.getCellColor}
           currentRowClass={props.currentRowClass}
+          winningWord={props.winningWord}
           isCurrentGuessRow={true}
+          isAnimating={props.isAnimating}
         />
       );
     }
@@ -34,7 +39,7 @@ function Board(props) {
       rows.push(
         <BoardRow
           key={i}
-          guess=""
+          currentGuess=""
           submitted={false}
           getCellColor={props.getCellColor}
         />

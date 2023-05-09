@@ -11,11 +11,14 @@ function BoardRow(props) {
       <Cell
         key={i}
         index={i}
-        guess={props.guess}
+        currentGuess={props.currentGuess}
         submitted={props.submitted}
         getCellColor={props.getCellColor}
         currentRowClass={props.currentRowClass}
+        winningWord={props.winningWord}
         isCurrentGuessRow={props.isCurrentGuessRow}
+        isAnimating={props.isAnimating}
+        gameWon={props.gameWon}
       />
     );
   }

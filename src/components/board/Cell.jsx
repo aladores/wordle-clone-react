@@ -3,30 +3,43 @@
 
 function Cell(props) {
   //const [isActive, setIsActive] = useState(true);
+  //console.log(props.isAnimating);
   let cellElement = "";
-  let hasLetter = props.guess[props.index] !== undefined;
-  let hasColor = props.getCellColor(props.guess, props.index);
+  let hasLetter = props.currentGuess[props.index] !== undefined;
+  let hasColor = props.getCellColor(props.currentGuess, props.index);
   if (hasLetter) {
-    cellElement = props.guess[props.index];
+    cellElement = props.currentGuess[props.index];
   }
 
   //Class names
+  let flipContainerClass = "flip-container";
   let cellClassName = "tile";
   let cellStatusClass = "";
   let backClass = "back";
+  let frontClass = "front";
   let isActive = false;
-  if (hasLetter) {
-    cellStatusClass += "filled";
-    isActive = true;
-  } else {
-    cellStatusClass += "empty";
-  }
 
+  if (hasLetter) {
+    frontClass += " filled";
+    frontClass += " active";
+  }
   if (props.submitted) {
     backClass += ` ${hasColor}`;
     cellClassName += " submitted";
-    isActive = false;
+
+    const guessJoined = props.currentGuess.join("");
+
+    if (props.winningWord === guessJoined) {
+      console.log("Hereeeeeee:", props.gameWon);
+
+      if (!props.isAnimating) {
+        frontClass = "front no-border";
+        flipContainerClass += " medium-green";
+        flipContainerClass += " win";
+      }
+    }
   }
+
   if (props.isCurrentGuessRow) {
     cellClassName += ` ${props.currentRowClass}`;
   }
@@ -37,19 +50,13 @@ function Cell(props) {
   return (
     <div className={`${cellClassName}`}>
       <div
-        className="flip-container"
+        className={flipContainerClass}
         style={{
           animationDelay: props.index * 300 + "ms",
           transitionDelay: props.index * 300 + "ms",
         }}
       >
-        <div
-          className={`front${hasLetter ? " filled" : ""}${
-            isActive ? " active" : ""
-          }`}
-        >
-          {cellElement}
-        </div>
+        <div className={frontClass}>{cellElement}</div>
         <div className={backClass}>{cellElement}</div>
       </div>
     </div>

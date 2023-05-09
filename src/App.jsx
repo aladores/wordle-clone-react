@@ -11,7 +11,6 @@ function App() {
   const [currentGuess, setCurrentGuess] = useState([]);
   const [currentRowClass, setCurrentRowClass] = useState("");
   const [isAnimating, setIsAnimating] = useState(false);
-
   const [guessHistory, setGuessHistory] = useState([]);
   const [keyboardColors, setKeyboardColors] = useState({
     correctLetters: [],
@@ -76,6 +75,7 @@ function App() {
     }
 
     if (currentGuess.length === 5) {
+      console.log(isAnimating);
       setCurrentRowClass("");
       const currentGuessJoined = currentGuess.join("");
       const isValidWord = await checkValidWord(currentGuessJoined);
@@ -87,11 +87,12 @@ function App() {
       //Todo: Can reduce state handling here
       setGuessHistory((guessHistory) => [...guessHistory, currentGuess]);
       setCurrentGuess("");
-
       setIsAnimating(true);
+
       if (currentGuessJoined === winningWord) {
         return setGameWon(true);
       }
+
       if (guessHistory.length > 4) {
         return setGameLost(true);
       }
@@ -195,6 +196,8 @@ function App() {
           guessHistory={guessHistory}
           winningWord={winningWord}
           currentRowClass={currentRowClass}
+          isAnimating={isAnimating}
+          gameWon={gameWon}
           getCellColor={getCellColor}
         />
         {

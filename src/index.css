@@ -12,8 +12,6 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 
-  /*Header.css*/
-  --header-height: 50px;
   --box-side: 60px;
 }
 
@@ -32,13 +30,29 @@
   }
 }
 
-@media (max-width: 420px) {
+@media (max-width: 400px) {
+  /* Keyboard.css */
   .keyboard-button {
     width: 30px;
   }
   .keyboard-special {
-    font-size: 0.7rem;
     width: 50px;
+  }
+}
+
+@media (min-width: 401px) and (max-width: 420px) {
+  /*Header.css*/
+  .header {
+    height: 50px;
+  }
+
+  /* Keyboard.css */
+  .keyboard-button {
+    width: 33px;
+  }
+  .keyboard-special {
+    font-size: 0.7rem;
+    width: 55px;
   }
 }
 

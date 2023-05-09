@@ -43,6 +43,7 @@
 
 .front,
 .back {
+  border: none;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -100,5 +101,23 @@
   60%,
   80% {
     transform: translateX(-5px);
+  }
+}
+
+.win {
+  animation: rise 0.3s ease-in-out forwards;
+}
+
+.no-border {
+  border: none;
+}
+
+@keyframes rise {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
   }
 }
