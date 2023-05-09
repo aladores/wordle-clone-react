@@ -1,6 +1,9 @@
 .keyboardRow {
   display: flex;
-  gap: 5px;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  gap: 7px;
 }
 
 .keyboard-button {

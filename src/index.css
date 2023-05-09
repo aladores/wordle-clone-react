@@ -12,5 +12,40 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 
-  overflow: hidden;
+  /*Header.css*/
+  --header-height: 50px;
+  --box-side: 60px;
+}
+
+@media (max-height: 700px) {
+  :root {
+    --box-side: 50px;
+    --header-height: 50px;
+  }
+  .board {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+  /* App.css */
+  .main-container {
+    justify-content: start;
+  }
+}
+
+@media (max-width: 420px) {
+  .keyboard-button {
+    width: 30px;
+  }
+  .keyboard-special {
+    font-size: 0.7rem;
+    width: 50px;
+  }
+}
+
+@media (max-height: 900px) {
+  /* Board.css */
+  .board {
+    padding-top: 30px;
+    padding-bottom: 30px;
+  }
 }

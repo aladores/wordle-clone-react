@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Header from "./components/Header";
 import Board from "./components/board/Board";
 import Keyboard from "./components/keyboard/Keyboard";
+import Modal from "./components/modal/Modal";
 
 import "./App.css";
 function App() {
@@ -186,6 +187,7 @@ function App() {
 
   return (
     <div className="app">
+      {/* <Modal /> */}
       <Header />
       <main className="main-container">
         <Board
@@ -195,15 +197,17 @@ function App() {
           currentRowClass={currentRowClass}
           getCellColor={getCellColor}
         />
-        <Keyboard
-          guessHistory={guessHistory}
-          handleClick={handleClick}
-          currentGuess={currentGuess}
-          winningWord={winningWord}
-          handleSubmit={handleSubmit}
-          handleDelete={handleDelete}
-          keyboardColors={keyboardColors}
-        />
+        {
+          <Keyboard
+            guessHistory={guessHistory}
+            handleClick={handleClick}
+            currentGuess={currentGuess}
+            winningWord={winningWord}
+            handleSubmit={handleSubmit}
+            handleDelete={handleDelete}
+            keyboardColors={keyboardColors}
+          />
+        }
       </main>
     </div>
   );

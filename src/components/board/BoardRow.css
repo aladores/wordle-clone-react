@@ -1,19 +1,19 @@
 .boardRow {
-  display: flex;
-  justify-content: center;
-  gap: 7px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-gap: 8px;
 }
 
 .front:empty::before {
   content: "\A0";
-  height: 60px;
-  width: 60px;
+  height: var(--box-side);
+  width: var(--box-side);
   border: 1px solid #5e5e5e;
 }
 
 .front {
-  height: 60px;
-  width: 60px;
+  height: var(--box-side);
+  width: var(--box-side);
   border: 1px solid #5e5e5e;
 }
 
@@ -36,8 +36,8 @@
   display: inline-block;
   font-size: 2rem;
   font-weight: bold;
-  height: 60px;
-  width: 60px;
+  height: var(--box-side);
+  width: var(--box-side);
   perspective: 1000px;
 }
 
