@@ -35,8 +35,31 @@ function App() {
     console.log("setting winning word");
     console.log("Winning Word: ", wordList[day]["Word"]);
     setWinningWord(wordList[day]["Word"]);
-  }, []);
+  }, [day]);
 
+  function handlePrev() {
+    if (day === 0) {
+      //Show Modal?
+      showModal("Cannot go back");
+      console.log("Error, cannot go back");
+      return;
+    }
+    setDay((prevDay) => prevDay - 1);
+  }
+
+  function handleRandom() {
+    const randomDay = Math.floor(Math.random() * wordList.length);
+    setDay(randomDay);
+  }
+
+  function handleNext() {
+    if (day === 100) {
+      showModal("Cannot go forward");
+      console.log("Error, cannot got forward");
+      return;
+    }
+    setDay((prevDay) => prevDay + 1);
+  }
   function handleClick(event) {
     handleNewLetter(event);
   }
@@ -240,9 +263,15 @@ function App() {
       <div className="modal-container">{modalElements}</div>
       <Header day={day} />
       <div className="day-controls">
-        <button className="day-control-button">Previous</button>
-        <button className="day-control-button">Random</button>
-        <button className="day-control-button">Next</button>
+        <button onClick={handlePrev} className="day-control-button">
+          Prev
+        </button>
+        <button onClick={handleRandom} className="day-control-button">
+          Random
+        </button>
+        <button onClick={handleNext} className="day-control-button">
+          Next
+        </button>
       </div>
       <main className="main-container">
         <Board

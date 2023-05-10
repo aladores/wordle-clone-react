@@ -23,6 +23,19 @@ h1 {
   gap: 15px;
 }
 
+.day-controls {
+  display: flex;
+  gap: 15px;
+  padding-top: 10px;
+}
+
+.day-control-button {
+  padding: 5px 15px 5px 15px;
+
+  border: none;
+  border-radius: 5px;
+  background-color: white;
+}
 .main-container {
   display: flex;
   flex-direction: column;

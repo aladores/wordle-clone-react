@@ -1,8 +1,9 @@
+/* eslint-disable react/prop-types */
 import "./Modal.css";
 
 function Modal(props) {
   return (
-    <div className="modal" style={{position: `${props.index * 100}px`}} >
+    <div className="modal" style={{ position: `${props.index * 100}px` }}>
       <p>{props.message}</p>
     </div>
   );
