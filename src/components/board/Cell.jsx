@@ -3,7 +3,6 @@
 
 function Cell(props) {
   //const [isActive, setIsActive] = useState(true);
-  //console.log(props.isAnimating);
   let cellElement = "";
   let hasLetter = props.currentGuess[props.index] !== undefined;
   let hasColor = props.getCellColor(props.currentGuess, props.index);
@@ -16,6 +15,7 @@ function Cell(props) {
   let cellClass = "tile";
   let backClass = "back";
   let frontClass = "front";
+  let currentRowClass = props.currentRowClass;
 
   if (hasLetter) {
     frontClass += " filled";
@@ -37,19 +37,15 @@ function Cell(props) {
     }
   }
 
-  if (props.isCurrentGuessRow) {
-    cellClass += ` ${props.currentRowClass}`;
-  }
-
   //  <div className={`${cellClass} ${isActive ? "active" : ""}`}>
   //<div className={`${cellClass}`}>
 
   return (
     <div
-      className={`${cellClass}`}
+      className={`${cellClass} ${currentRowClass}`}
       style={{
-        animationDelay: props.index * 100 + "ms",
-        transitionDelay: props.index * 100 + "ms",
+        animationDelay: !currentRowClass ? props.index * 100 + "ms" : "",
+        transitionDelay: !currentRowClass ? props.index * 100 + "ms" : "",
       }}
     >
       <div

@@ -1,9 +1,9 @@
 import "./Modal.css";
 
-function Modal() {
+function Modal(props) {
   return (
-    <div className="modal">
-      <p>hello</p>
+    <div className="modal" style={{position: `${props.index * 100}px`}} >
+      <p>{props.message}</p>
     </div>
   );
 }
