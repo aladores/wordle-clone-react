@@ -13,16 +13,20 @@ function App() {
   const [currentGuess, setCurrentGuess] = useState([]);
   const [currentRowClass, setCurrentRowClass] = useState("");
   const [isAnimating, setIsAnimating] = useState(false);
-  const [guessHistory, setGuessHistory] = useState([]);
   const [modals, setModals] = useState([]);
   const [keyboardColors, setKeyboardColors] = useState({
     correctLetters: [],
     closeLetters: [],
     wrongLetters: [],
   });
+  const loadedGuessHistory = localStorage.getItem("guessHistory")
+  ? JSON.parse(localStorage.getItem("guessHistory"))
+  : [];
+  const [guessHistory, setGuessHistory] = useState(loadedGuessHistory);
   const modalElements=[];
   const winningWord = "FATED";
   const timeoutRef = useRef();
+
 
   function handleClick(event) {
     handleNewLetter(event);
@@ -100,10 +104,12 @@ function App() {
       setIsAnimating(true);
 
       if (currentGuessJoined === winningWord) {
+        showModal("Marvelous"); 
         return setGameWon(true);
       }
 
       if (guessHistory.length > 4) {
+        showModal(`${winningWord}`); 
         return setGameLost(true);
       }
     }
@@ -187,6 +193,11 @@ function App() {
     }
     return isValid;
   }
+
+  useEffect(()=>{
+      localStorage.setItem('guessHistory',JSON.stringify(guessHistory));
+      console.log("setting to local storage");
+  },[guessHistory])
 
   useEffect(() => {
     return () => {
