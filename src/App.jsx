@@ -1,15 +1,16 @@
 import { useState, useEffect,useRef } from "react";
-import Header from "./components/Header";
+import Header from "./components/header/Header";
 import Board from "./components/board/Board";
 import Keyboard from "./components/keyboard/Keyboard";
 import Modal from "./components/modal/Modal";
 
 import uuid from 'react-native-uuid';
-
+import wordListFile from './wordList';
 import "./App.css";
 function App() {
   const [gameWon, setGameWon] = useState(false);
   const [gameLost, setGameLost] = useState(false);
+  const [winningWord, setWinningWord] = useState("");
   const [currentGuess, setCurrentGuess] = useState([]);
   const [currentRowClass, setCurrentRowClass] = useState("");
   const [isAnimating, setIsAnimating] = useState(false);
@@ -19,13 +20,22 @@ function App() {
     closeLetters: [],
     wrongLetters: [],
   });
+  const wordList = wordListFile;
+  const [day,setDay] = useState(Math.floor(Math.random() * wordList.length));
   const loadedGuessHistory = localStorage.getItem("guessHistory")
   ? JSON.parse(localStorage.getItem("guessHistory"))
   : [];
-  const [guessHistory, setGuessHistory] = useState(loadedGuessHistory);
+  //const [guessHistory, setGuessHistory] = useState(loadedGuessHistory);
+  const [guessHistory, setGuessHistory] = useState([]);
+
   const modalElements=[];
-  const winningWord = "FATED";
-  const timeoutRef = useRef();
+  const timeoutRef = useRef(); 
+
+  useEffect(()=>{
+    console.log("setting winning word");
+    console.log("Winning Word: ",wordList[day]["Word"]);
+    setWinningWord(wordList[day]["Word"]);
+  },[])
 
 
   function handleClick(event) {
@@ -234,7 +244,8 @@ function App() {
       <div className="modal-container">
       {modalElements}
       </div>
-      <Header />
+      <Header
+        day={day} />
       <main className="main-container">
         <Board
           currentGuess={currentGuess}

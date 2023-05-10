@@ -1,12 +1,22 @@
 .header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+
 
   width: 100%;
   height: 70px;
   border-bottom: 1px solid grey;
+
 }
 
-.header-settings {
+
+.menu {
+  width: 50px;
+}
+
+.header-text {
+  width: 100%;
+  text-align: center;
+
+
 }
