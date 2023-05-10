@@ -1,11 +1,11 @@
-import { useState, useEffect,useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import Header from "./components/header/Header";
 import Board from "./components/board/Board";
 import Keyboard from "./components/keyboard/Keyboard";
 import Modal from "./components/modal/Modal";
 
-import uuid from 'react-native-uuid';
-import wordListFile from './wordList';
+import uuid from "react-native-uuid";
+import wordListFile from "./wordList";
 import "./App.css";
 function App() {
   const [gameWon, setGameWon] = useState(false);
@@ -21,22 +21,21 @@ function App() {
     wrongLetters: [],
   });
   const wordList = wordListFile;
-  const [day,setDay] = useState(Math.floor(Math.random() * wordList.length));
+  const [day, setDay] = useState(Math.floor(Math.random() * wordList.length));
   const loadedGuessHistory = localStorage.getItem("guessHistory")
-  ? JSON.parse(localStorage.getItem("guessHistory"))
-  : [];
+    ? JSON.parse(localStorage.getItem("guessHistory"))
+    : [];
   //const [guessHistory, setGuessHistory] = useState(loadedGuessHistory);
   const [guessHistory, setGuessHistory] = useState([]);
 
-  const modalElements=[];
-  const timeoutRef = useRef(); 
+  const modalElements = [];
+  const timeoutRef = useRef();
 
-  useEffect(()=>{
+  useEffect(() => {
     console.log("setting winning word");
-    console.log("Winning Word: ",wordList[day]["Word"]);
+    console.log("Winning Word: ", wordList[day]["Word"]);
     setWinningWord(wordList[day]["Word"]);
-  },[])
-
+  }, []);
 
   function handleClick(event) {
     handleNewLetter(event);
@@ -65,7 +64,6 @@ function App() {
         return;
       }
       if (newLetter === "ENTER") {
-
         handleSubmit();
         return;
       }
@@ -92,7 +90,7 @@ function App() {
 
     if (currentGuess.length !== 5) {
       setCurrentRowClass("shake");
-      showModal("Not enough letters"); 
+      showModal("Not enough letters");
       setTimeout(() => {
         setCurrentRowClass("");
       }, 500);
@@ -104,7 +102,7 @@ function App() {
       const isValidWord = await checkValidWord(currentGuessJoined);
       if (isValidWord === false) {
         setCurrentRowClass("shake");
-        showModal("Not in word list"); 
+        showModal("Not in word list");
         return;
       }
 
@@ -114,12 +112,12 @@ function App() {
       setIsAnimating(true);
 
       if (currentGuessJoined === winningWord) {
-        showModal("Marvelous"); 
+        showModal("Marvelous");
         return setGameWon(true);
       }
 
       if (guessHistory.length > 4) {
-        showModal(`${winningWord}`); 
+        showModal(`${winningWord}`);
         return setGameLost(true);
       }
     }
@@ -171,19 +169,18 @@ function App() {
     return "medium-yellow";
   }
 
-  function showModal (message) {
-    setModals(prevModal => [...prevModal, message]);
+  function showModal(message) {
+    setModals((prevModal) => [...prevModal, message]);
     timeoutRef.current = setTimeout(() => {
-      setModals(prevModal => prevModal.slice(1));
+      setModals((prevModal) => prevModal.slice(1));
     }, 2000);
   }
 
-    modalElements.push(modals.map((message,index)=>{
-      return <Modal 
-        key = {uuid.v4()}
-        index = {index}
-        message={message}/>
-    }));
+  modalElements.push(
+    modals.map((message, index) => {
+      return <Modal key={uuid.v4()} index={index} message={message} />;
+    })
+  );
 
   async function checkValidWord(currentGuessJoined) {
     let isValid = false;
@@ -194,8 +191,7 @@ function App() {
       const wordResult = await response.json();
       if (wordResult["title"] !== "No Definitions Found") {
         isValid = true;
-      }
-      else{
+      } else {
         console.log("Error");
       }
     } catch {
@@ -204,10 +200,10 @@ function App() {
     return isValid;
   }
 
-  useEffect(()=>{
-      localStorage.setItem('guessHistory',JSON.stringify(guessHistory));
-      console.log("setting to local storage");
-  },[guessHistory])
+  useEffect(() => {
+    localStorage.setItem("guessHistory", JSON.stringify(guessHistory));
+    console.log("setting to local storage");
+  }, [guessHistory]);
 
   useEffect(() => {
     return () => {
@@ -241,11 +237,13 @@ function App() {
 
   return (
     <div className="app">
-      <div className="modal-container">
-      {modalElements}
+      <div className="modal-container">{modalElements}</div>
+      <Header day={day} />
+      <div className="day-controls">
+        <button className="day-control-button">Previous</button>
+        <button className="day-control-button">Random</button>
+        <button className="day-control-button">Next</button>
       </div>
-      <Header
-        day={day} />
       <main className="main-container">
         <Board
           currentGuess={currentGuess}
