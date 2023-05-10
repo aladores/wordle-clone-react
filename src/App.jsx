@@ -32,16 +32,30 @@ function App() {
   const timeoutRef = useRef();
 
   useEffect(() => {
-    console.log("setting winning word");
+    resetGame();
     console.log("Winning Word: ", wordList[day]["Word"]);
     setWinningWord(wordList[day]["Word"]);
-  }, [day]);
+  }, [day, wordList]);
 
+  function resetGame() {
+    setGameWon(false);
+    setGameLost(false);
+    setWinningWord("");
+    setCurrentGuess([]);
+    setCurrentRowClass("");
+    setIsAnimating(false);
+    setModals([]);
+    setKeyboardColors({
+      correctLetters: [],
+      closeLetters: [],
+      wrongLetters: [],
+    });
+    setGuessHistory([]);
+  }
   function handlePrev() {
     if (day === 0) {
       //Show Modal?
       showModal("Cannot go back");
-      console.log("Error, cannot go back");
       return;
     }
     setDay((prevDay) => prevDay - 1);
@@ -53,9 +67,8 @@ function App() {
   }
 
   function handleNext() {
-    if (day === 100) {
+    if (day === 99) {
       showModal("Cannot go forward");
-      console.log("Error, cannot got forward");
       return;
     }
     setDay((prevDay) => prevDay + 1);
@@ -225,7 +238,6 @@ function App() {
 
   useEffect(() => {
     localStorage.setItem("guessHistory", JSON.stringify(guessHistory));
-    console.log("setting to local storage");
   }, [guessHistory]);
 
   useEffect(() => {

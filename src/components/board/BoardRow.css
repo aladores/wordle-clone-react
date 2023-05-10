@@ -4,13 +4,6 @@
   grid-gap: 8px;
 }
 
-.front:empty::before {
-  content: "\A0";
-  height: var(--box-side);
-  width: var(--box-side);
-  border: 1px solid #5e5e5e;
-}
-
 .front {
   height: var(--box-side);
   width: var(--box-side);
@@ -87,7 +80,6 @@
 }
 
 @keyframes shake {
-
   0%,
   100% {
     transform: translateX(0);
@@ -114,7 +106,6 @@
 }
 
 @keyframes rise {
-
   0%,
   100% {
     transform: translateY(0);
@@ -131,4 +122,14 @@
   90% {
     transform: translateY(-5px);
   }
+}
+
+.empty {
+  background-color: #121213;
+
+  border: 1px solid #5e5e5e;
+  -webkit-transition: none !important;
+  -moz-transition: none !important;
+  -o-transition: none !important;
+  transition: none !important;
 }

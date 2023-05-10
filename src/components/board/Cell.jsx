@@ -15,11 +15,13 @@ function Cell(props) {
   let cellClass = "tile";
   let backClass = "back";
   let frontClass = "front";
-  let currentRowClass = props.currentRowClass;
+  let currentRowClass = props.currentRowClass ? props.currentRowClass : "";
 
   if (hasLetter) {
     frontClass += " filled";
     frontClass += " active";
+  } else {
+    cellClass += " empty";
   }
   if (props.submitted) {
     backClass += ` ${hasColor}`;
